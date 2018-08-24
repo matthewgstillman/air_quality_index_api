@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Home</title>
+{% endblock%}
+
+
+{% block content %}
+<div class="container">
+    <h1>Air Quality Index API</h1>
+    {% if air_quality %}
+    <h6>{{ air_quality.data }}</h6>
+    <h6>City: {{ air_quality.data.city.name }}</h6>
+    {% endif %}
+    <h6>{{ air_quality }}</h6>
+</div>
+{% endblock %}

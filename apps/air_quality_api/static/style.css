@@ -1,0 +1,19 @@
+body{
+    background-color: #002244;
+    color:#69BE28;
+}
+
+.container{
+     background-color: #69BE28;
+     color: black;
+     border-radius: 10px;
+     margin-bottom: 10px;
+}
+
+a{
+    color: white;
+}
+
+
+li a{
+    color: #69BE28;
