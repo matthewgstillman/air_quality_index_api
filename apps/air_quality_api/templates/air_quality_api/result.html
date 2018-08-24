@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Home</title>
+{% endblock%}
+
+
+{% block content %}
+<a href="/">Go Back</a>
+<div class="container">
+    <h1>Air Quality Index API</h1>
+    <h2>{{ location }}</h2>
+    {% if air_quality %}
+    <h1><b>Air Quality Index:</b> {{ air_quality.country_aqi }}</h1>
+    <h6><b>Description:</b> {{ air_quality.dominant_pollutant_text.main }}</h6>
+    <h6><b>Effects:</b> {{ air_quality.dominant_pollutant_text.effects }}</h6>
+    <h6><b>Causes:</b> {{ air_quality.dominant_pollutant_text.causes }}</h6>
+    <h6><b>Random Recommendations:</b> {{ air_quality.random_recommendations.inside }}</h6>
+    <h6><b>Sport:</b> {{ air_quality.random_recommendations.sport }}</h6>
+    <h6><b>Health:</b> {{ air_quality.random_recommendations.health }}</h6>
+    <h6><b>Advice For Children:</b> {{ air_quality.random_recommendations.children }}</h6>
+    <h6><b>Advice For Outside:</b> {{ air_quality.random_recommendations.outside }}</h6>
+    <br>
+    {% endif %}
+</div>
+{% endblock %}
