@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title>Home</title>
+<title>Result</title>
 {% endblock%}
 
 
 {% block content %}
 <a href="/">Go Back</a>
 <div class="container">
-    <h1>Air Quality Index API</h1>
+    <h1>Air Quality Index API - Results</h1>
     <h2>{{ location }}</h2>
     {% if air_quality %}
     <h1><b>Air Quality Index:</b> {{ air_quality.country_aqi }}</h1>

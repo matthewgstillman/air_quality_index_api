@@ -3,32 +3,31 @@ import aqi
 import geopy
 from geopy.geocoders import Nominatim
 import requests
-# Breezyometer api key - 5c3a30fff7ba42749b923c9ef9bd718e
-# import pwaqi
-# Create your views here.
-# def index(request):
-#     url = ('http://api.waqi.info/feed/seattle/?token=1efcfae1ada2efa2270689923652087180093867')
-#     response = requests.get(url)
-#     air_quality = response.json()
-#     print (air_quality)
-#     context = {
-#         'air_quality': air_quality,
-#     }
-#     return render(request, 'air_quality_api/index.html', context)
+
+def forecast(request):
+    root_url = 'https://api.breezometer.com/forecast/?lat='
+    lat = request.session['lat']
+    print("Session Latitude: " + str(lat))
+    lon_string = '&lon='
+    lon = request.session['lon']
+    print("Session Longitude: " + str(lon))
+    key_string = '&key=5c3a30fff7ba42749b923c9ef9bd718e'
+    url = str(root_url) + str(lat) + str(lon_string) + str(lon) + str(key_string)
+    print(url)
+    response = requests.get(url)
+    forecast = response.json()
+    context = {
+        'forecast': forecast,
+    }
+    return render(request, 'air_quality_api/forecast.html', context)
+
+def heatmap(request):
+    context = {
+    }
+    return render(request, 'air_quality_api/heatmap.html', context)
 
 def index(request):
-    geolocator = Nominatim(user_agent="air_quality_api")
-    location = geolocator.geocode("175 5th Avenue NYC")
-    print(location.address)
-    print((location.latitude, location.longitude))
-    lat = location.latitude
-    lon = location.longitude
-    url = ('https://api.breezometer.com/baqi/?lat=lat&lon=lon&key=5c3a30fff7ba42749b923c9ef9bd718e')
-    response = requests.get(url)
-    air_quality = response.json()
-    print (air_quality)
     context = {
-        'air_quality': air_quality,
     }
     return render(request, 'air_quality_api/index.html', context)
 
@@ -41,11 +40,14 @@ def result(request):
         location = geolocator.geocode(address)
         print("Location Address: " + str(location))
         print((location.latitude, location.longitude))
-        lat = location.latitude
-        lon = location.longitude
-        print("Latitude: " + str(lat))
-        print("Longitude: " + str(lon))
-        # url = ('https://api.breezometer.com/baqi/?lat=lat&lon=lon&key=5c3a30fff7ba42749b923c9ef9bd718e')
+        request.session['lat'] = location.latitude
+        lat = request.session['lat']
+        print("Session Latitude: " + str(lat))
+        request.session['lon'] = location.longitude
+        lon = request.session['lon']
+        print("Session Longitude: " + str(lon))
+        # print("Latitude: " + str(lat))
+        # print("Longitude: " + str(lon))
         root_url = 'https://api.breezometer.com/baqi/?lat='
         lat = lat
         lon_string = '&lon='
@@ -59,6 +61,8 @@ def result(request):
         context = {
             'address': address,
             'air_quality': air_quality,
+            'lat': lat,
+            'lon': lon,
             'location': location,
         }
         return render(request, 'air_quality_api/result.html', context)
